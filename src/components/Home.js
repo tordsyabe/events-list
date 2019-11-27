@@ -1,16 +1,14 @@
 import React, { Fragment, useContext, useState } from "react";
 
-import { Grid, Container, Button } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import ViewDayIcon from "@material-ui/icons/ViewDay";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 
 import { EventsContext } from "../contexts/EventsContext";
-import Search from "../components/Search";
 import CardView from "../components/CardView";
 import ListView from "../components/ListView";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import firebase from "../firebase";
 import Nav from "./layout/Nav";
 import SideNav from "./layout/SideNav";
 import SideNavContextProvider from "../contexts/SideNavContext";
@@ -23,7 +21,7 @@ const Home = () => {
     cardView ? (
       <CardView key={event.id} event={event} />
     ) : (
-      <ListView key={event.id} event={event} width="100" />
+      <ListView key={event.id} event={event} width='100' />
     )
   );
 
@@ -40,11 +38,11 @@ const Home = () => {
             alignItems: "center"
           }}
         >
-          <Container maxWidth="lg">
+          <Container maxWidth='lg'>
             <Grid
               container
-              alignItems="center"
-              justify="space-between"
+              alignItems='center'
+              justify='space-between'
               style={{ margin: "1rem auto" }}
             >
               <Grid
@@ -58,20 +56,20 @@ const Home = () => {
                 }}
               >
                 <IconButton onClick={() => setCardView(false)}>
-                  <FormatListBulletedIcon />
+                  <FormatListBulletedIcon color={cardView ? "" : "secondary"} />
                 </IconButton>
                 <IconButton onClick={() => setCardView(true)}>
-                  <ViewDayIcon />
+                  <ViewDayIcon color={cardView ? "" : "secondary"} />
                 </IconButton>
               </Grid>
             </Grid>
           </Container>
-          <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
+          <Container maxWidth='lg' style={{ marginTop: "2rem" }}>
             {events.length === 0 ? (
               <Grid
                 container
-                justify="center"
-                alignItems="center"
+                justify='center'
+                alignItems='center'
                 style={{ height: "100%" }}
               >
                 <CircularProgress />

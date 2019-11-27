@@ -23,7 +23,6 @@ const AuthContextProvider = props => {
             if (idTokenResult.claims.admin) {
               setIsAdmin(true);
               setIsAdminAuthen(false);
-              console.log("isAdmin: ", isAdmin);
             }
           })
           .catch(error => console.log(error));

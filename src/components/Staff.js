@@ -26,8 +26,9 @@ const Staff = ({ onsiteTeam }) => {
 
         <Grid item xs={12}>
           <Typography variant='subtitle2'>
-            {onsiteTeam.map(team => (
+            {onsiteTeam.map((team, index) => (
               <Chip
+                key={index}
                 size='small'
                 label={team}
                 style={{
