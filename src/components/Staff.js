@@ -31,11 +31,11 @@ const Staff = ({ onsiteTeam }) => {
                 size='small'
                 label={team}
                 style={{
-                  background: "#3f51b5",
                   color: "#ffffff",
                   margin: "1px",
                   textTransform: "capitalize"
                 }}
+                color='secondary'
               />
             ))}
           </Typography>
