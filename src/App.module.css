@@ -1,6 +1,12 @@
 .Card {
   width: 100%;
-  margin-top: 0.6rem;
+  margin-top: 0.8rem;
+  max-height: 165px;
+  cursor: pointer;
+}
+
+.Card:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .StaffCard {
@@ -10,5 +16,8 @@
 @media screen and (max-width: 900px) {
   .StaffCard {
     max-width: 100% !important;
+  }
+  .Card {
+    max-height: 100%;
   }
 }

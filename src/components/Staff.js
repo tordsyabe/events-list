@@ -4,7 +4,7 @@ import styles from "../App.module.css";
 
 import { Grid, Typography, Chip } from "@material-ui/core";
 
-const Staff = ({ staffs }) => {
+const Staff = ({ onsiteTeam }) => {
   return (
     <Grid
       item
@@ -16,23 +16,20 @@ const Staff = ({ staffs }) => {
       className={styles.StaffCard}
       style={{
         padding: "1rem",
-        textAlign: "center",
-        background: "#eeeeee"
-        // borderRight: "1px solid #eeeeee"
+        textAlign: "center"
       }}
     >
-      <Grid container direction="row" justify="center">
+      <Grid container direction='row' justify='center'>
         <Grid item style={{ marginBottom: "0.8rem", textAlign: "center" }}>
-          <Typography variant="subtitle1">Onsite Team</Typography>
+          <Typography variant='h6'>Onsite Team</Typography>
         </Grid>
 
         <Grid item xs={12}>
-          {staffs.projectManager && (
-            <Typography variant="subtitle2">
-              Project Manager{" "}
+          <Typography variant='subtitle2'>
+            {onsiteTeam.map(team => (
               <Chip
-                size="small"
-                label={staffs.projectManager}
+                size='small'
+                label={team}
                 style={{
                   background: "#3f51b5",
                   color: "#ffffff",
@@ -40,47 +37,8 @@ const Staff = ({ staffs }) => {
                   textTransform: "capitalize"
                 }}
               />
-            </Typography>
-          )}
-        </Grid>
-
-        <Grid item xs={12}>
-          {staffs.projectCoordinator && (
-            <Typography variant="subtitle2">
-              Project Coordinator{" "}
-              <Chip
-                size="small"
-                label={staffs.projectCoordinator}
-                style={{
-                  background: "#673ab7",
-                  color: "#ffffff",
-                  margin: "1px",
-                  textTransform: "capitalize"
-                }}
-              />
-            </Typography>
-          )}
-        </Grid>
-
-        <Grid item xs={12}>
-          {staffs.technical && (
-            <Typography variant="subtitle2">
-              Technical{" "}
-              {staffs.technical.map((tech, i) => (
-                <Chip
-                  size="small"
-                  key={i}
-                  label={tech}
-                  style={{
-                    background: "#212121",
-                    color: "#ffffff",
-                    margin: "1px",
-                    textTransform: "capitalize"
-                  }}
-                />
-              ))}
-            </Typography>
-          )}
+            ))}
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

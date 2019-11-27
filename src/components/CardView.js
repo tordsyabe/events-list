@@ -14,7 +14,7 @@ const CardView = ({ event }) => {
   return (
     <Card className={cardStyles.Card} key={event.id}>
       <CardContent style={{ padding: 0, minHeight: "165px" }}>
-        <Grid container direction="row">
+        <Grid container direction='row'>
           {/* DATE GRID */}
           <Date
             eventDate={event.eventDate}
@@ -31,7 +31,7 @@ const CardView = ({ event }) => {
           {/* SYSTEMS/TERMINALS GRID */}
           <Terminal systems={event.systems} />
           {/* STAFFS GRID */}
-          <Staff staffs={event.team} />
+          <Staff onsiteTeam={event.team} />
         </Grid>
       </CardContent>
     </Card>

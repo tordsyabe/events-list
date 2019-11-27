@@ -6,7 +6,13 @@ import {
   DialogActions,
   Button,
   TextField,
-  MenuItem
+  MenuItem,
+  Grid,
+  InputLabel,
+  Select,
+  Input,
+  Chip,
+  FormControl
 } from "@material-ui/core";
 
 import DateFnsUtils from "@date-io/date-fns";
@@ -21,6 +27,34 @@ import { getDay } from "../../utils/Utils";
 import { getYear } from "../../utils/Utils";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: "100%",
+    maxWidth: "100%"
+  },
+  chips: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  chip: {
+    margin: 2
+  },
+  noLabel: {
+    marginTop: theme.spacing(3)
+  }
+}));
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium
+  };
+}
 
 const EventForm = ({
   formState,
@@ -40,11 +74,27 @@ const EventForm = ({
   const [printer, setPrinter] = React.useState("");
 
   const [kiosk, setKiosk] = React.useState("");
-  const [projectManager, setProjectManager] = React.useState("");
-  const [projectCoordinator, setProjectCoordinator] = React.useState("");
-  const [technical, setTechnical] = React.useState([]);
+  // const [projectManager, setProjectManager] = React.useState("");
+  // const [projectCoordinator, setProjectCoordinator] = React.useState("");
+  // const [technical, setTechnical] = React.useState([]);
+  const [onsiteTeam, setOnsiteTeam] = React.useState([]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = event => {
+    setOnsiteTeam(event.target.value);
+  };
+
+  const handleChangeMultiple = event => {
+    const { options } = event.target;
+    const value = [];
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    setOnsiteTeam(value);
+  };
 
   const paperTypes = [
     {
@@ -73,6 +123,37 @@ const EventForm = ({
       label: "Label Sticker"
     }
   ];
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250
+      }
+    }
+  };
+
+  const onsiteTeamNames = [
+    "Ayah",
+    "Sijo",
+    "Zulfi",
+    "Shahnaz",
+    "Jithin",
+    "Erwin",
+    "Nikhil",
+    "Mazin",
+    "Hesham",
+    "Ken",
+    "Adil",
+    "Jamal",
+    "Hira",
+    "Aleeza"
+  ];
+
+  const classes = useStyles();
+  const theme = useTheme();
 
   const handleStartDateChange = date => {
     setSelectStartDate(date);
@@ -127,11 +208,7 @@ const EventForm = ({
           printer: printer,
           kiosk: kiosk
         },
-        team: {
-          projectManager,
-          projectCoordinator,
-          technical: technical
-        }
+        team: onsiteTeam
       })
       .then(() => {
         setIsSubmitting(false);
@@ -146,9 +223,10 @@ const EventForm = ({
         setPrinter("");
 
         setKiosk("");
-        setProjectManager("");
-        setProjectCoordinator("");
-        setTechnical("");
+        setOnsiteTeam([]);
+        // setProjectManager("");
+        // setProjectCoordinator("");
+        // setTechnical("");
       })
       .then(() => setSnackBarState({ ...snackBarState, open: true }));
   };
@@ -163,33 +241,42 @@ const EventForm = ({
       <DialogTitle id='form-dialog-title'>Create an event</DialogTitle>
       <DialogContent>
         <form onSubmit={handleEventFormSubmit}>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              disableToolbar
-              variant='inline'
-              format='MM/dd/yyyy'
-              margin='normal'
-              id='start-date'
-              label='Event Start Date'
-              value={selectStartDate}
-              onChange={handleStartDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date"
-              }}
-            />
-            <KeyboardDatePicker
-              disableToolbar
-              variant='inline'
-              format='MM/dd/yyyy'
-              margin='normal'
-              id='end-date'
-              label='Event End Date'
-              value={selectEndDate}
-              onChange={handleEndChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date"
-              }}
-            />
+          <Grid container>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <Grid item xs={12} sm={6}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  autoOk
+                  variant='inline'
+                  format='MM/dd/yyyy'
+                  margin='normal'
+                  id='start-date'
+                  label='Event Start Date'
+                  value={selectStartDate}
+                  onChange={handleStartDateChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date"
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  autoOk
+                  variant='inline'
+                  format='MM/dd/yyyy'
+                  margin='normal'
+                  id='end-date'
+                  label='Event End Date'
+                  value={selectEndDate}
+                  onChange={handleEndChange}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date"
+                  }}
+                />
+              </Grid>
+            </MuiPickersUtilsProvider>
+
             <TextField
               required
               id='outlined-basic'
@@ -219,7 +306,7 @@ const EventForm = ({
             />
             <TextField
               required
-              id='standard-select-currency'
+              id='standard-select-badge'
               select
               label='Select'
               value={paperType}
@@ -234,43 +321,53 @@ const EventForm = ({
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              required
-              id='outlined-basic'
-              label='Badge Count'
-              variant='outlined'
-              type='number'
-              margin='dense'
-              onChange={e => setBadgeCount(e.target.value)}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Terminals'
-              variant='outlined'
-              type='number'
-              helperText='How many terminals?'
-              margin='dense'
-              onChange={e => setTerminal(e.target.value)}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Printers'
-              variant='outlined'
-              type='number'
-              helperText='How many printers?'
-              margin='dense'
-              onChange={e => setPrinter(e.target.value)}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Kiosk'
-              variant='outlined'
-              type='number'
-              helperText='How many kiosk?'
-              margin='dense'
-              onChange={e => setKiosk(e.target.value)}
-            />
-            <TextField
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id='outlined-basic'
+                label='Badge Count'
+                variant='outlined'
+                helperText='How many badges?'
+                type='number'
+                margin='dense'
+                onChange={e => setBadgeCount(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id='outlined-basic'
+                label='Terminals'
+                variant='outlined'
+                type='number'
+                helperText='How many terminals?'
+                margin='dense'
+                onChange={e => setTerminal(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id='outlined-basic'
+                label='Printers'
+                variant='outlined'
+                type='number'
+                helperText='How many printers?'
+                margin='dense'
+                onChange={e => setPrinter(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id='outlined-basic'
+                label='Kiosk'
+                variant='outlined'
+                type='number'
+                helperText='How many kiosk?'
+                margin='dense'
+                onChange={e => setKiosk(e.target.value)}
+              />
+            </Grid>
+
+            {/* <TextField
               required
               id='outlined-basic'
               label='Project Manager'
@@ -295,8 +392,42 @@ const EventForm = ({
               margin='dense'
               fullWidth
               onChange={e => setTechnical([e.target.value])}
-            />
-          </MuiPickersUtilsProvider>
+            /> */}
+            <FormControl className={classes.formControl}>
+              <InputLabel id='demo-mutiple-chip-label'>Onsite Team</InputLabel>
+              <Select
+                labelId='demo-mutiple-chip-label'
+                id='demo-mutiple-chip'
+                multiple
+                value={onsiteTeam}
+                onChange={handleChange}
+                input={<Input id='select-multiple-chip' />}
+                renderValue={selected => (
+                  <div className={classes.chips}>
+                    {selected.map(value => (
+                      <Chip
+                        key={value}
+                        label={value}
+                        className={classes.chip}
+                      />
+                    ))}
+                  </div>
+                )}
+                MenuProps={MenuProps}
+              >
+                {onsiteTeamNames.map(name => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, onsiteTeam, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+
           <DialogActions>
             <Button onClick={handleFormClose} color='primary'>
               Cancel

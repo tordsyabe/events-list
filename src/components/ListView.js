@@ -4,7 +4,8 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  IconButton
+  IconButton,
+  Chip
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -77,17 +78,41 @@ const ListView = ({ event, width }) => {
               <Fragment>
                 {event.systems.terminal && (
                   <Typography variant='subtitle2'>
-                    Terminals - {event.systems.terminal}
+                    <Chip
+                      size='small'
+                      label={`Terminals - ${event.systems.terminal}`}
+                      style={{
+                        color: "black",
+                        margin: "1px",
+                        textTransform: "capitalize"
+                      }}
+                    />
                   </Typography>
                 )}
                 {event.systems.printer && (
                   <Typography variant='subtitle2'>
-                    Printers - {event.systems.printer}
+                    <Chip
+                      size='small'
+                      label={`Printers - ${event.systems.printer}`}
+                      style={{
+                        color: "black",
+                        margin: "1px",
+                        textTransform: "capitalize"
+                      }}
+                    />
                   </Typography>
                 )}
                 {event.systems.kiosk && (
                   <Typography variant='subtitle2'>
-                    Kiosk - {event.systems.kiosk}
+                    <Chip
+                      size='small'
+                      label={`Kiosk - ${event.systems.kiosk}`}
+                      style={{
+                        color: "black",
+                        margin: "1px",
+                        textTransform: "capitalize"
+                      }}
+                    />
                   </Typography>
                 )}
               </Fragment>
@@ -96,32 +121,19 @@ const ListView = ({ event, width }) => {
           <ListItemText
             style={{ flex: "1" }}
             primary={
-              <Fragment>
-                {event.team.projectManager && (
-                  <Typography
-                    variant='subtitle2'
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {event.team.projectManager}
-                  </Typography>
-                )}
-                {event.team.projectCoordinator && (
-                  <Typography
-                    variant='subtitle2'
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {event.team.projectCoordinator}
-                  </Typography>
-                )}
-                {event.team.technical && (
-                  <Typography
-                    variant='subtitle2'
-                    style={{ textTransform: "capitalize" }}
-                  >
-                    {event.team.technical}
-                  </Typography>
-                )}
-              </Fragment>
+              <Typography variant='subtitle2'>
+                {event.team.map(team => (
+                  <Chip
+                    size='small'
+                    label={team}
+                    style={{
+                      color: "black",
+                      margin: "1px",
+                      textTransform: "capitalize"
+                    }}
+                  />
+                ))}
+              </Typography>
             }
           />
           {isAdmin && (

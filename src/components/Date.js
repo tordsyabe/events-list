@@ -12,25 +12,15 @@ const Date = ({ eventDate, eventOrganizer, eventName }) => {
       lg={3}
       xl={3}
       style={{
-        backgroundColor: "rgb(63,81,181)",
-        background: `linear-gradient(180deg, rgba(63,81,181,1) 0%, #7c4dff 100%)`,
+        backgroundColor: "rgb(238, 238, 238)",
         padding: "1rem 2rem",
         minWidth: "30%",
         minHeight: "175px"
       }}
     >
       <Title eventOrganizer={eventOrganizer} eventName={eventName} />
-      <Typography variant='h4' style={{ color: "#ffffff", fontWeight: "bold" }}>
-        {eventDate.eventDays}
-      </Typography>
-      <Typography
-        variant='subtitle1'
-        style={{
-          color: "#ffffff"
-        }}
-      >
-        {eventDate.eventMonth}
-      </Typography>
+      <Typography variant='h4'>{eventDate.eventDays}</Typography>
+      <Typography variant='subtitle1'>{eventDate.eventMonth}</Typography>
       <br />
     </Grid>
   );

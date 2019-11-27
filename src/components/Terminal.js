@@ -15,7 +15,8 @@ const Terminal = ({ systems }) => {
       xl={2}
       style={{
         padding: "10px",
-        margin: "1rem 0"
+        margin: "1rem 0",
+        borderRight: "1px solid #e0e0e0"
       }}
     >
       <Grid container justify='center'>

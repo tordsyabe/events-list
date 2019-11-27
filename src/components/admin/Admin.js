@@ -19,9 +19,7 @@ import { Redirect } from "react-router-dom";
 
 const Admin = () => {
   const { events } = React.useContext(EventsContext);
-  const { isAdmin, isAdminAuthen, isAuthenticating } = React.useContext(
-    AuthContext
-  );
+  const { isAdmin, isAdminAuthen } = React.useContext(AuthContext);
 
   const [formState, setFormState] = React.useState(false);
 
@@ -61,7 +59,7 @@ const Admin = () => {
   }
 
   if (isAdmin === null) {
-    return <Redirect to="/" />;
+    return <Redirect to='/' />;
   }
 
   return (
@@ -69,13 +67,13 @@ const Admin = () => {
       <SideNavContextProvider>
         <Nav />
         <SideNav />
-        <Container maxWidth="lg" style={{ marginTop: "2rem" }}>
-          <Typography variant="h4" color="inherit">
+        <Container maxWidth='lg' style={{ marginTop: "2rem" }}>
+          <Typography variant='h4' color='inherit'>
             Events List
           </Typography>
           <Fab
-            color="primary"
-            aria-label="add"
+            color='primary'
+            aria-label='add'
             style={{
               position: "fixed",
               right: "1.2rem",
@@ -88,7 +86,7 @@ const Admin = () => {
           </Fab>
           <div style={{ marginTop: "2rem" }}>
             {events.map(event => (
-              <ListView key={event.id} event={event} width="100" />
+              <ListView key={event.id} event={event} width='100' />
             ))}
           </div>
         </Container>
@@ -106,7 +104,7 @@ const Admin = () => {
             "aria-describedby": "message-id"
           }}
           style={{ textAlign: "center" }}
-          message={<span id="message-id">Event schedule saved.</span>}
+          message={<span id='message-id'>Event schedule saved.</span>}
         />
       </SideNavContextProvider>
     </div>
