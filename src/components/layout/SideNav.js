@@ -7,11 +7,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
 import { SideNavContext } from "../../contexts/SideNavContext";
-import { Link } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 import firebase from "../../firebase";
 
-const SideNav = () => {
+const SideNav = props => {
   const { toggleSideNav, toggleDrawer } = useContext(SideNavContext);
   const logout = () => {
     firebase.auth().signOut();
@@ -19,35 +19,26 @@ const SideNav = () => {
 
   const sideList = () => (
     <div
-      role="presentation"
+      role='presentation'
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
       style={{ width: "220px" }}
     >
       <List>
-        <ListItem button>
-          <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-                Home
-              </Link>
-            }
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>{<MailIcon />}</ListItemIcon>
-          <ListItemText
-            primary={
-              <Link
-                to="/admin"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                Admin
-              </Link>
-            }
-          />
-        </ListItem>
+        <NavLink to='/' style={{ textDecoration: "none", color: "black" }}>
+          <ListItem button selected={props.location.pathname === "/"}>
+            <ListItemIcon>{<MailIcon />}</ListItemIcon>
+            <ListItemText primary={"Home"} />
+          </ListItem>
+        </NavLink>
+
+        <NavLink to='/admin' style={{ textDecoration: "none", color: "black" }}>
+          <ListItem button selected={props.location.pathname === "/admin"}>
+            <ListItemIcon>{<MailIcon />}</ListItemIcon>
+            <ListItemText primary={"Admin"} />
+          </ListItem>
+        </NavLink>
+
         <ListItem button onClick={logout}>
           <ListItemIcon>{<MailIcon />}</ListItemIcon>
           <ListItemText primary={"Logout"} />
@@ -68,4 +59,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default withRouter(SideNav);

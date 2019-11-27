@@ -157,20 +157,20 @@ const EventForm = ({
     <Dialog
       open={formState}
       onClose={handleFormClose}
-      aria-labelledby="form-dialog-title"
+      aria-labelledby='form-dialog-title'
       style={{ width: "800px !important" }}
     >
-      <DialogTitle id="form-dialog-title">Create an event</DialogTitle>
+      <DialogTitle id='form-dialog-title'>Create an event</DialogTitle>
       <DialogContent>
         <form onSubmit={handleEventFormSubmit}>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="start-date"
-              label="Event Start Date"
+              variant='inline'
+              format='MM/dd/yyyy'
+              margin='normal'
+              id='start-date'
+              label='Event Start Date'
               value={selectStartDate}
               onChange={handleStartDateChange}
               KeyboardButtonProps={{
@@ -179,11 +179,11 @@ const EventForm = ({
             />
             <KeyboardDatePicker
               disableToolbar
-              variant="inline"
-              format="MM/dd/yyyy"
-              margin="normal"
-              id="end-date"
-              label="Event End Date"
+              variant='inline'
+              format='MM/dd/yyyy'
+              margin='normal'
+              id='end-date'
+              label='Event End Date'
               value={selectEndDate}
               onChange={handleEndChange}
               KeyboardButtonProps={{
@@ -192,39 +192,39 @@ const EventForm = ({
             />
             <TextField
               required
-              id="outlined-basic"
-              label="Event Name"
-              variant="outlined"
+              id='outlined-basic'
+              label='Event Name'
+              variant='outlined'
               fullWidth
-              margin="dense"
+              margin='dense'
               onChange={e => setEventName(e.target.value)}
             />
             <TextField
               required
-              id="outlined-basic"
-              label="Organizer"
-              variant="outlined"
+              id='outlined-basic'
+              label='Organizer'
+              variant='outlined'
               fullWidth
-              margin="dense"
+              margin='dense'
               onChange={e => setOrganizer(e.target.value)}
             />
             <TextField
               required
-              id="outlined-basic"
-              label="Location"
-              variant="outlined"
+              id='outlined-basic'
+              label='Location'
+              variant='outlined'
               fullWidth
-              margin="dense"
+              margin='dense'
               onChange={e => setLocation(e.target.value)}
             />
             <TextField
               required
-              id="standard-select-currency"
+              id='standard-select-currency'
               select
-              label="Select"
+              label='Select'
               value={paperType}
-              helperText="Please select badge type"
-              margin="normal"
+              helperText='Please select badge type'
+              margin='normal'
               fullWidth
               onChange={e => setPaperType(e.target.value)}
             >
@@ -236,74 +236,76 @@ const EventForm = ({
             </TextField>
             <TextField
               required
-              id="outlined-basic"
-              label="Badge Count"
-              variant="outlined"
-              type="number"
-              margin="dense"
+              id='outlined-basic'
+              label='Badge Count'
+              variant='outlined'
+              type='number'
+              margin='dense'
               onChange={e => setBadgeCount(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
-              label="Terminals"
-              variant="outlined"
-              type="number"
-              helperText="How many terminals?"
-              margin="dense"
+              id='outlined-basic'
+              label='Terminals'
+              variant='outlined'
+              type='number'
+              helperText='How many terminals?'
+              margin='dense'
               onChange={e => setTerminal(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
-              label="Printers"
-              variant="outlined"
-              type="number"
-              helperText="How many printers?"
-              margin="dense"
+              id='outlined-basic'
+              label='Printers'
+              variant='outlined'
+              type='number'
+              helperText='How many printers?'
+              margin='dense'
               onChange={e => setPrinter(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
-              label="Kiosk"
-              variant="outlined"
-              type="number"
-              helperText="How many kiosk?"
-              margin="dense"
+              id='outlined-basic'
+              label='Kiosk'
+              variant='outlined'
+              type='number'
+              helperText='How many kiosk?'
+              margin='dense'
               onChange={e => setKiosk(e.target.value)}
             />
             <TextField
               required
-              id="outlined-basic"
-              label="Project Manager"
-              variant="outlined"
-              margin="dense"
+              id='outlined-basic'
+              label='Project Manager'
+              variant='outlined'
+              margin='dense'
               fullWidth
               onChange={e => setProjectManager(e.target.value)}
             />
             <TextField
-              id="outlined-basic"
-              label="Project Coordinator"
-              variant="outlined"
-              margin="dense"
+              id='outlined-basic'
+              label='Project Coordinator'
+              variant='outlined'
+              margin='dense'
               fullWidth
               onChange={e => setProjectCoordinator(e.target.value)}
             />
             <TextField
               required
-              id="outlined-basic"
-              label="Technical"
-              variant="outlined"
-              margin="dense"
+              id='outlined-basic'
+              label='Technical'
+              variant='outlined'
+              margin='dense'
               fullWidth
               onChange={e => setTechnical([e.target.value])}
             />
           </MuiPickersUtilsProvider>
           <DialogActions>
-            <Button onClick={handleFormClose}>Cancel</Button>
-            <Button disabled={isSubmitting} type="submit">
+            <Button onClick={handleFormClose} color='primary'>
+              Cancel
+            </Button>
+            <Button disabled={isSubmitting} type='submit' color='primary'>
               Save
               {isSubmitting && (
                 <CircularProgress
-                  size="1rem"
+                  size='1rem'
                   style={{ position: "absolute" }}
                 />
               )}
