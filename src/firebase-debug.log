@@ -1,0 +1,14 @@
+[debug] [2019-11-25T20:13:07.450Z] ----------------------------------------------------------------------
+[debug] [2019-11-25T20:13:07.452Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2019-11-25T20:13:07.452Z] CLI Version:   7.8.1
+[debug] [2019-11-25T20:13:07.452Z] Platform:      linux
+[debug] [2019-11-25T20:13:07.452Z] Node Version:  v10.16.0
+[debug] [2019-11-25T20:13:07.453Z] Time:          Tue Nov 26 2019 00:13:07 GMT+0400 (Gulf Standard Time)
+[debug] [2019-11-25T20:13:07.453Z] ----------------------------------------------------------------------
+[debug] [2019-11-25T20:13:07.453Z] 
+[debug] [2019-11-25T20:13:07.460Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-25T20:13:07.460Z] > authorizing via signed-in user
+[debug] [2019-11-25T20:13:07.460Z] [iam] checking project event-sched-43719 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2019-11-25T20:13:07.462Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/event-sched-43719:testIamPermissions  
+
+[debug] [2019-11-25T20:13:09.118Z] <<< HTTP RESPONSE 200
