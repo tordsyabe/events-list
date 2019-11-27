@@ -59,7 +59,7 @@ const Home = () => {
                   <FormatListBulletedIcon color={cardView ? "" : "secondary"} />
                 </IconButton>
                 <IconButton onClick={() => setCardView(true)}>
-                  <ViewDayIcon color={cardView ? "" : "secondary"} />
+                  <ViewDayIcon color={!cardView ? "" : "secondary"} />
                 </IconButton>
               </Grid>
             </Grid>
