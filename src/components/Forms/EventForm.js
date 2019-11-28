@@ -367,32 +367,6 @@ const EventForm = ({
               />
             </Grid>
 
-            {/* <TextField
-              required
-              id='outlined-basic'
-              label='Project Manager'
-              variant='outlined'
-              margin='dense'
-              fullWidth
-              onChange={e => setProjectManager(e.target.value)}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Project Coordinator'
-              variant='outlined'
-              margin='dense'
-              fullWidth
-              onChange={e => setProjectCoordinator(e.target.value)}
-            />
-            <TextField
-              required
-              id='outlined-basic'
-              label='Technical'
-              variant='outlined'
-              margin='dense'
-              fullWidth
-              onChange={e => setTechnical([e.target.value])}
-            /> */}
             <FormControl className={classes.formControl}>
               <InputLabel id='demo-mutiple-chip-label'>Onsite Team</InputLabel>
               <Select

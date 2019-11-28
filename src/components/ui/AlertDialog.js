@@ -4,8 +4,10 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
+import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "../../firebase";
+import { Grid, Typography } from "@material-ui/core";
 
 export default function AlertDialog(props) {
   return (
@@ -16,10 +18,19 @@ export default function AlertDialog(props) {
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>{props.eventName}</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>
+          <Grid container justify='space-between'>
+            <Grid item>{props.eventName}</Grid>
+            <Grid item>
+              <WarningRoundedIcon color='error' />
+            </Grid>
+          </Grid>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            Are you sure you want to delete this event?
+            <Typography variant='subtitle2'>
+              Are you sure you want to delete this event?
+            </Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

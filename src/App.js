@@ -6,14 +6,15 @@ import Routes from "./Routes";
 import AuthContextProvider from "./contexts/AuthContext";
 import EventsContextProvider from "./contexts/EventsContext";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { deepPurple } from "@material-ui/core/colors";
+import { deepPurple, red } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#1976d2"
     },
-    secondary: deepPurple
+    secondary: deepPurple,
+    error: red
   }
 });
 
