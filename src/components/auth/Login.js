@@ -66,7 +66,7 @@ const Login = props => {
           padding: "1rem"
         }}
       >
-        <Avatar>
+        <Avatar style={{ background: "blue", transition: "all 100ms" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>

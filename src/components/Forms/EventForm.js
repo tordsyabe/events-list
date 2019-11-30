@@ -28,6 +28,8 @@ import { getYear } from "../../utils/Utils";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { saveEvent } from "../../services/EventService";
+import { EventFormContext } from "../../contexts/EventFormContext";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -62,22 +64,32 @@ const EventForm = ({
   setSnackBarState,
   snackBarState
 }) => {
-  const [selectStartDate, setSelectStartDate] = React.useState(new Date());
-  const [selectEndDate, setSelectEndDate] = React.useState(new Date());
-  const [eventName, setEventName] = React.useState("");
-  const [organizer, setOrganizer] = React.useState("");
-
-  const [Location, setLocation] = React.useState("");
-  const [paperType, setPaperType] = React.useState("");
-  const [badgeCount, setBadgeCount] = React.useState("");
-  const [terminal, setTerminal] = React.useState("");
-  const [printer, setPrinter] = React.useState("");
-
-  const [kiosk, setKiosk] = React.useState("");
-  // const [projectManager, setProjectManager] = React.useState("");
-  // const [projectCoordinator, setProjectCoordinator] = React.useState("");
-  // const [technical, setTechnical] = React.useState([]);
-  const [onsiteTeam, setOnsiteTeam] = React.useState([]);
+  const {
+    eventId,
+    setEventId,
+    selectStartDate,
+    setSelectStartDate,
+    selectEndDate,
+    setSelectEndDate,
+    eventName,
+    setEventName,
+    organizer,
+    setOrganizer,
+    eventLocation,
+    setLocation,
+    paperType,
+    setPaperType,
+    badgeCount,
+    setBadgeCount,
+    terminal,
+    setTerminal,
+    printer,
+    setPrinter,
+    kiosk,
+    setKiosk,
+    onsiteTeam,
+    setOnsiteTeam
+  } = React.useContext(EventFormContext);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -156,10 +168,12 @@ const EventForm = ({
   const theme = useTheme();
 
   const handleStartDateChange = date => {
+    console.log(date);
     setSelectStartDate(date);
   };
 
   const handleEndChange = date => {
+    console.log(date);
     setSelectEndDate(date);
   };
 
@@ -184,35 +198,34 @@ const EventForm = ({
       return startDate + "-" + endDate;
     };
 
-    firebase
-      .firestore()
-      .collection("events")
-      .add({
-        dateCreated,
-        eventDate: {
-          eventDays: eventDays(),
-          eventMonth: eventMonth,
-          eventYear: year,
-          eventStartDate: firebase.firestore.Timestamp.fromDate(
-            selectStartDate
-          ),
-          eventEndDate: firebase.firestore.Timestamp.fromDate(selectEndDate)
-        },
-        eventName: eventName,
-        eventOrganizer: organizer,
-        location: Location,
-        paperType: paperType,
-        badgeCount: badgeCount,
-        systems: {
-          terminal: terminal,
-          printer: printer,
-          kiosk: kiosk
-        },
-        team: onsiteTeam
-      })
+    saveEvent({
+      eventId: eventId,
+      dateCreated,
+      eventDate: {
+        eventDays: eventDays(),
+        eventMonth: eventMonth,
+        eventYear: year,
+        eventStartDate: firebase.firestore.Timestamp.fromDate(selectStartDate),
+        eventEndDate: firebase.firestore.Timestamp.fromDate(selectEndDate)
+      },
+      eventName: eventName,
+      eventOrganizer: organizer,
+      location: eventLocation,
+      paperType: paperType,
+      badgeCount: badgeCount,
+      systems: {
+        terminal: terminal,
+        printer: printer,
+        kiosk: kiosk
+      },
+      team: onsiteTeam
+    })
       .then(() => {
         setIsSubmitting(false);
+
         handleFormClose();
+        setSelectEndDate(new Date());
+        setSelectStartDate(new Date());
         setEventName("");
         setOrganizer("");
 
@@ -224,9 +237,6 @@ const EventForm = ({
 
         setKiosk("");
         setOnsiteTeam([]);
-        // setProjectManager("");
-        // setProjectCoordinator("");
-        // setTechnical("");
       })
       .then(() => setSnackBarState({ ...snackBarState, open: true }));
   };
@@ -285,6 +295,7 @@ const EventForm = ({
               fullWidth
               margin='dense'
               onChange={e => setEventName(e.target.value)}
+              value={eventName}
             />
             <TextField
               required
@@ -294,6 +305,7 @@ const EventForm = ({
               fullWidth
               margin='dense'
               onChange={e => setOrganizer(e.target.value)}
+              value={organizer}
             />
             <TextField
               required
@@ -303,6 +315,7 @@ const EventForm = ({
               fullWidth
               margin='dense'
               onChange={e => setLocation(e.target.value)}
+              value={eventLocation}
             />
             <TextField
               required
@@ -331,6 +344,7 @@ const EventForm = ({
                 type='number'
                 margin='dense'
                 onChange={e => setBadgeCount(e.target.value)}
+                value={badgeCount}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -342,6 +356,7 @@ const EventForm = ({
                 helperText='How many terminals?'
                 margin='dense'
                 onChange={e => setTerminal(e.target.value)}
+                value={terminal}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -353,6 +368,7 @@ const EventForm = ({
                 helperText='How many printers?'
                 margin='dense'
                 onChange={e => setPrinter(e.target.value)}
+                value={printer}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -364,6 +380,7 @@ const EventForm = ({
                 helperText='How many kiosk?'
                 margin='dense'
                 onChange={e => setKiosk(e.target.value)}
+                value={kiosk}
               />
             </Grid>
 

@@ -6,14 +6,16 @@ import Routes from "./Routes";
 import AuthContextProvider from "./contexts/AuthContext";
 import EventsContextProvider from "./contexts/EventsContext";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { deepPurple, red } from "@material-ui/core/colors";
+import { red, pink, blue } from "@material-ui/core/colors";
+import EventFormContxtProvider from "./contexts/EventFormContext";
+import SnackBarContextProvider from "./contexts/SnackBarContext";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#1976d2"
+      main: blue[700]
     },
-    secondary: deepPurple,
+    secondary: pink,
     error: red
   }
 });
@@ -24,7 +26,11 @@ function App() {
       <BrowserRouter>
         <AuthContextProvider>
           <EventsContextProvider>
-            <Routes />
+            <EventFormContxtProvider>
+              <SnackBarContextProvider>
+                <Routes />
+              </SnackBarContextProvider>
+            </EventFormContxtProvider>
           </EventsContextProvider>
         </AuthContextProvider>
       </BrowserRouter>

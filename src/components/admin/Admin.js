@@ -10,32 +10,26 @@ import {
 } from "@material-ui/core";
 import ListView from "../ListView";
 import { EventsContext } from "../../contexts/EventsContext";
-import EventForm from "../Forms/EventForm";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { AuthContext } from "../../contexts/AuthContext";
 
 import { Redirect } from "react-router-dom";
+import { EventFormContext } from "../../contexts/EventFormContext";
+import { SnackBarContext } from "../../contexts/SnackBarContext";
+import EventForm from "../Forms/EventForm";
 
 const Admin = () => {
   const { events } = React.useContext(EventsContext);
   const { isAdmin, isAdminAuthen } = React.useContext(AuthContext);
-
-  const [formState, setFormState] = React.useState(false);
-
-  const [snackBarState, setSnackBarState] = React.useState({
-    open: false,
-    vertical: "top",
-    horizontal: "center"
-  });
-
-  const handleCloseSnackBar = () => {
-    setSnackBarState({ ...snackBarState, open: false });
-  };
-
-  const handleFormClose = () => {
-    setFormState(false);
-  };
+  const { formState, handleFormClose, setFormState } = React.useContext(
+    EventFormContext
+  );
+  const {
+    snackBarState,
+    setSnackBarState,
+    handleCloseSnackBar
+  } = React.useContext(SnackBarContext);
 
   const { open, vertical, horizontal } = snackBarState;
 
@@ -72,7 +66,7 @@ const Admin = () => {
             Events List
           </Typography>
           <Fab
-            color='primary'
+            color='secondary'
             aria-label='add'
             style={{
               position: "fixed",
@@ -96,6 +90,7 @@ const Admin = () => {
           setSnackBarState={setSnackBarState}
           snackBarState={snackBarState}
         />
+
         <Snackbar
           anchorOrigin={{ vertical, horizontal }}
           open={open}

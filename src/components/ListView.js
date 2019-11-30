@@ -12,11 +12,38 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import firebase from "../firebase";
 import AlertDialog from "./ui/AlertDialog";
+import { EventFormContext } from "../contexts/EventFormContext";
+import { withRouter } from "react-router-dom";
 
-const ListView = ({ event, width }) => {
+const ListView = ({ event, width, location }, props) => {
   const { isAdmin } = useContext(AuthContext);
+  const {
+    setFormState,
+    setEventId,
+    selectStartDate,
+    setSelectStartDate,
+    selectEndDate,
+    setSelectEndDate,
+    eventName,
+    setEventName,
+    organizer,
+    setOrganizer,
+    eventLocation,
+    setLocation,
+    paperType,
+    setPaperType,
+    badgeCount,
+    setBadgeCount,
+    terminal,
+    setTerminal,
+    printer,
+    setPrinter,
+    kiosk,
+    setKiosk,
+    onsiteTeam,
+    setOnsiteTeam
+  } = React.useContext(EventFormContext);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
 
   const handleCloseAlertDialog = () => {
@@ -136,13 +163,35 @@ const ListView = ({ event, width }) => {
               </Typography>
             }
           />
-          {isAdmin && (
+          {isAdmin && location.pathname === "/admin" && (
             <div>
               <IconButton onClick={handleOpenAlertDialog}>
-                <DeleteIcon fontSize='small' />
+                <DeleteIcon fontSize='small' color='error' />
               </IconButton>
-              <IconButton onClick={() => console.log(event.id)}>
-                <EditIcon fontSize='small' />
+              <IconButton
+                onClick={() => {
+                  console.log(event);
+                  setFormState(true);
+                  setEventId(event.id);
+                  setEventName(event.eventName);
+                  setSelectStartDate(
+                    new Date(event.eventDate.eventStartDate.seconds * 1000)
+                  );
+                  setSelectEndDate(
+                    new Date(event.eventDate.eventEndDate.seconds * 1000)
+                  );
+                  setOrganizer(event.eventOrganizer);
+                  setLocation(event.location);
+                  setPaperType(event.paperType);
+                  setBadgeCount(event.badgeCount);
+                  setTerminal(event.systems.terminal);
+                  setPrinter(event.systems.printer);
+                  setKiosk(event.systems.kiosk);
+                  setOnsiteTeam(event.team);
+                  console.log(new Date(event.eventDate.eventStartDate.seconds));
+                }}
+              >
+                <EditIcon fontSize='small' color='primary' />
               </IconButton>
             </div>
           )}
@@ -159,4 +208,4 @@ const ListView = ({ event, width }) => {
   );
 };
 
-export default ListView;
+export default withRouter(ListView);
