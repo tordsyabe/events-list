@@ -248,7 +248,9 @@ const EventForm = ({
       aria-labelledby='form-dialog-title'
       style={{ width: "800px !important" }}
     >
-      <DialogTitle id='form-dialog-title'>Create an event</DialogTitle>
+      <DialogTitle id='form-dialog-title'>
+        {eventId === "" ? "Create an event" : `Update this event`}
+      </DialogTitle>
       <DialogContent>
         <form onSubmit={handleEventFormSubmit}>
           <Grid container>

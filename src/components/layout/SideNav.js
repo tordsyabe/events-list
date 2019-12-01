@@ -61,7 +61,18 @@ const SideNav = props => {
         <NavLink to='/admin' style={{ textDecoration: "none", color: "black" }}>
           <ListItem button selected={props.location.pathname === "/admin"}>
             <ListItemIcon>{<EventNoteRoundedIcon />}</ListItemIcon>
-            <ListItemText primary={"Admin"} />
+            <ListItemText primary={"Manage Events"} />
+          </ListItem>
+        </NavLink>
+
+        <NavLink to='/users' style={{ textDecoration: "none", color: "black" }}>
+          <ListItem
+            button
+            disabled
+            selected={props.location.pathname === "/users"}
+          >
+            <ListItemIcon>{<EventNoteRoundedIcon />}</ListItemIcon>
+            <ListItemText primary={"Manage Users"} />
           </ListItem>
         </NavLink>
 

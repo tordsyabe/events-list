@@ -7,12 +7,12 @@ import {
   IconButton,
   Chip
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import AlertDialog from "./ui/AlertDialog";
+import DeleteAlertDialog from "./ui/DeleteAlertDialog";
 import { EventFormContext } from "../contexts/EventFormContext";
 import { withRouter } from "react-router-dom";
 
@@ -21,27 +21,16 @@ const ListView = ({ event, width, location }, props) => {
   const {
     setFormState,
     setEventId,
-    selectStartDate,
     setSelectStartDate,
-    selectEndDate,
     setSelectEndDate,
-    eventName,
     setEventName,
-    organizer,
     setOrganizer,
-    eventLocation,
     setLocation,
-    paperType,
     setPaperType,
-    badgeCount,
     setBadgeCount,
-    terminal,
     setTerminal,
-    printer,
     setPrinter,
-    kiosk,
     setKiosk,
-    onsiteTeam,
     setOnsiteTeam
   } = React.useContext(EventFormContext);
   const [openAlertDialog, setOpenAlertDialog] = useState(false);
@@ -166,7 +155,7 @@ const ListView = ({ event, width, location }, props) => {
           {isAdmin && location.pathname === "/admin" && (
             <div>
               <IconButton onClick={handleOpenAlertDialog}>
-                <DeleteIcon fontSize='small' color='error' />
+                <DeleteRoundedIcon fontSize='small' />
               </IconButton>
               <IconButton
                 onClick={() => {
@@ -191,14 +180,14 @@ const ListView = ({ event, width, location }, props) => {
                   console.log(new Date(event.eventDate.eventStartDate.seconds));
                 }}
               >
-                <EditIcon fontSize='small' color='primary' />
+                <EditRoundedIcon fontSize='small' />
               </IconButton>
             </div>
           )}
         </ListItem>
       </List>
 
-      <AlertDialog
+      <DeleteAlertDialog
         openAlertDialog={openAlertDialog}
         handleCloseAlertDialog={handleCloseAlertDialog}
         eventName={event.eventName}

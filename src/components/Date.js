@@ -1,8 +1,13 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, IconButton } from "@material-ui/core";
 import Title from "./Title";
+import { AuthContext } from "../contexts/AuthContext";
+import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
 
 const Date = ({ eventDate, eventOrganizer, eventName }) => {
+  const { isAdmin } = React.useContext(AuthContext);
+
   return (
     <Grid
       item
@@ -13,9 +18,10 @@ const Date = ({ eventDate, eventOrganizer, eventName }) => {
       xl={3}
       style={{
         backgroundColor: "rgb(238, 238, 238)",
-        padding: "1rem 2rem",
+        padding: "1rem 1.5rem",
         minWidth: "30%",
-        minHeight: "175px"
+        minHeight: "175px",
+        position: "relative"
       }}
     >
       <Title eventOrganizer={eventOrganizer} eventName={eventName} />
