@@ -19,12 +19,31 @@ import { EventFormContext } from "../../contexts/EventFormContext";
 import { SnackBarContext } from "../../contexts/SnackBarContext";
 import EventForm from "../Forms/EventForm";
 
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ExpandableView from "../ExpandableView";
+
+import DeleteAlertDialog from "../ui/DeleteAlertDialog";
+
 const Admin = () => {
+  const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
   const { events } = React.useContext(EventsContext);
   const { isAdmin, isAdminAuthen } = React.useContext(AuthContext);
   const { formState, handleFormClose, setFormState } = React.useContext(
     EventFormContext
   );
+
+  const [eventNameToDelete, setEventNameToDelete] = React.useState("");
+  const [eventIdToDelete, setEventIdToDelete] = React.useState("");
+  const [openAlertDialog, setOpenAlertDialog] = React.useState(false);
+
+  const handleCloseAlertDialog = () => {
+    setOpenAlertDialog(false);
+  };
+
+  const handleOpenAlertDialog = () => {
+    setOpenAlertDialog(true);
+  };
+
   const {
     snackBarState,
     setSnackBarState,
@@ -79,9 +98,32 @@ const Admin = () => {
             <AddIcon />
           </Fab>
           <div style={{ marginTop: "2rem" }}>
-            {events.map(event => (
-              <ListView key={event.id} event={event} width='100' />
-            ))}
+            {events.map(event =>
+              matches ? (
+                <ListView
+                  key={event.id}
+                  event={event}
+                  width='100'
+                  openAlertDialog={openAlertDialog}
+                  setOpenAlertDialog={setOpenAlertDialog}
+                  handleCloseAlertDialog={handleCloseAlertDialog}
+                  handleOpenAlertDialog={handleOpenAlertDialog}
+                  setEventIdToDelete={setEventIdToDelete}
+                  setEventNameToDelete={setEventNameToDelete}
+                />
+              ) : (
+                <ExpandableView
+                  key={event.id}
+                  event={event}
+                  openAlertDialog={openAlertDialog}
+                  setOpenAlertDialog={setOpenAlertDialog}
+                  handleCloseAlertDialog={handleCloseAlertDialog}
+                  handleOpenAlertDialog={handleOpenAlertDialog}
+                  setEventIdToDelete={setEventIdToDelete}
+                  setEventNameToDelete={setEventNameToDelete}
+                />
+              )
+            )}
           </div>
         </Container>
         <EventForm
@@ -100,6 +142,12 @@ const Admin = () => {
           }}
           style={{ textAlign: "center" }}
           message={<span id='message-id'>Event schedule saved.</span>}
+        />
+        <DeleteAlertDialog
+          openAlertDialog={openAlertDialog}
+          handleCloseAlertDialog={handleCloseAlertDialog}
+          eventName={eventNameToDelete}
+          eventId={eventIdToDelete}
         />
       </SideNavContextProvider>
     </div>

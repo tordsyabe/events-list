@@ -21,3 +21,11 @@ export const updateEVent = event => {
     .doc(event.id)
     .set(event);
 };
+
+export const deleteEvent = id => {
+  return firebase
+    .firestore()
+    .collection("events")
+    .doc(id)
+    .delete();
+};

@@ -13,15 +13,22 @@ import Nav from "./layout/Nav";
 import SideNav from "./layout/SideNav";
 import SideNavContextProvider from "../contexts/SideNavContext";
 
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ExpandableView from "./ExpandableView";
+
 const Home = () => {
+  const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
+
   const { events } = useContext(EventsContext);
   const [cardView, setCardView] = useState(true);
 
   const eventsUI = events.map(event =>
     cardView ? (
       <CardView key={event.id} event={event} />
-    ) : (
+    ) : matches ? (
       <ListView key={event.id} event={event} width='100' />
+    ) : (
+      <ExpandableView key={event.id} event={event} />
     )
   );
 

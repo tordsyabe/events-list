@@ -21,6 +21,8 @@ const Login = props => {
   let history = useHistory();
   const { currentUser, isAdminAuthen, isAdmin } = useContext(AuthContext);
 
+  const [isSigningIn, setIsSigningIn] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [snackBarState, setSnackBarState] = useState({
@@ -35,7 +37,7 @@ const Login = props => {
 
   const signInUser = e => {
     e.preventDefault();
-
+    setIsSigningIn(true);
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
@@ -46,7 +48,10 @@ const Login = props => {
           .then(() => {
             history.push("/admin");
           })
-          .catch(() => setSnackBarState({ ...snackBarState, open: true }));
+          .catch(() => {
+            setIsSigningIn(false);
+            setSnackBarState({ ...snackBarState, open: true });
+          });
       })
       .catch(function(error) {
         console.log(error);
@@ -66,7 +71,7 @@ const Login = props => {
           padding: "1rem"
         }}
       >
-        <Avatar style={{ background: "blue", transition: "all 100ms" }}>
+        <Avatar>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
@@ -110,8 +115,9 @@ const Login = props => {
             color='primary'
             size='large'
             style={{ marginTop: "2rem" }}
+            disabled={isSigningIn}
           >
-            Sign In
+            {!isSigningIn ? "Sign In" : <CircularProgress size={26} />}
           </Button>
         </form>
       </div>

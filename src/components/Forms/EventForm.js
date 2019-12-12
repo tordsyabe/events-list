@@ -422,17 +422,22 @@ const EventForm = ({
           </Grid>
 
           <DialogActions>
-            <Button onClick={handleFormClose} color='primary'>
+            <Button
+              onClick={handleFormClose}
+              variant='contained'
+              color='secondary'
+              size='small'
+            >
               Cancel
             </Button>
-            <Button disabled={isSubmitting} type='submit' color='primary'>
-              Save
-              {isSubmitting && (
-                <CircularProgress
-                  size='1rem'
-                  style={{ position: "absolute" }}
-                />
-              )}
+            <Button
+              disabled={isSubmitting}
+              type='submit'
+              variant='contained'
+              color='primary'
+              size='small'
+            >
+              {!isSubmitting ? "Save" : <CircularProgress size='1.3rem' />}
             </Button>
           </DialogActions>
         </form>

@@ -12,11 +12,19 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 
 import { AuthContext } from "../contexts/AuthContext";
 
-import DeleteAlertDialog from "./ui/DeleteAlertDialog";
 import { EventFormContext } from "../contexts/EventFormContext";
 import { withRouter } from "react-router-dom";
 
-const ListView = ({ event, width, location }, props) => {
+const ListView = ({
+  event,
+  width,
+  location,
+  openAlertDialog,
+  handleCloseAlertDialog,
+  handleOpenAlertDialog,
+  setEventNameToDelete,
+  setEventIdToDelete
+}) => {
   const { isAdmin } = useContext(AuthContext);
   const {
     setFormState,
@@ -33,15 +41,6 @@ const ListView = ({ event, width, location }, props) => {
     setKiosk,
     setOnsiteTeam
   } = React.useContext(EventFormContext);
-  const [openAlertDialog, setOpenAlertDialog] = useState(false);
-
-  const handleCloseAlertDialog = () => {
-    setOpenAlertDialog(false);
-  };
-
-  const handleOpenAlertDialog = () => {
-    setOpenAlertDialog(true);
-  };
 
   return (
     <React.Fragment>
@@ -56,7 +55,7 @@ const ListView = ({ event, width, location }, props) => {
         <ListItem
           divider
           button
-          style={{ width: "100%", minHeight: "88px", height: "88px" }}
+          style={{ width: "100%", minHeight: "90px", height: "90px" }}
         >
           <ListItemText
             style={{ flex: "1" }}
@@ -154,7 +153,13 @@ const ListView = ({ event, width, location }, props) => {
           />
           {isAdmin && location.pathname === "/admin" && (
             <div>
-              <IconButton onClick={handleOpenAlertDialog}>
+              <IconButton
+                onClick={() => {
+                  handleOpenAlertDialog();
+                  setEventNameToDelete(event.eventName);
+                  setEventIdToDelete(event.id);
+                }}
+              >
                 <DeleteRoundedIcon fontSize='small' />
               </IconButton>
               <IconButton
@@ -186,13 +191,6 @@ const ListView = ({ event, width, location }, props) => {
           )}
         </ListItem>
       </List>
-
-      <DeleteAlertDialog
-        openAlertDialog={openAlertDialog}
-        handleCloseAlertDialog={handleCloseAlertDialog}
-        eventName={event.eventName}
-        eventId={event.id}
-      />
     </React.Fragment>
   );
 };

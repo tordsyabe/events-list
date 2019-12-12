@@ -6,8 +6,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import WarningRoundedIcon from "@material-ui/icons/WarningRounded";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import firebase from "../../firebase";
 import { Grid, Typography } from "@material-ui/core";
+import { deleteEvent } from "../../services/EventService";
 
 export default function AlertDialog(props) {
   return (
@@ -34,22 +34,25 @@ export default function AlertDialog(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.handleCloseAlertDialog} color='primary'>
+          <Button
+            onClick={props.handleCloseAlertDialog}
+            variant='contained'
+            color='secondary'
+            size='small'
+          >
             Cancel
           </Button>
           <Button
             onClick={e => {
               e.stopPropagation();
-              firebase
-                .firestore()
-                .collection("events")
-                .doc(props.eventId)
-                .delete()
-                .then(() => {
-                  console.log("deleted");
-                });
+              props.handleCloseAlertDialog();
+              deleteEvent(props.eventId).then(() => {
+                console.log("deleted");
+              });
             }}
+            variant='contained'
             color='primary'
+            size='small'
             autoFocus
           >
             Confirm

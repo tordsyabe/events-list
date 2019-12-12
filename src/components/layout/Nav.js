@@ -11,10 +11,10 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { SideNavContext } from "../../contexts/SideNavContext";
-import Search from "../Search";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,35 +71,39 @@ const useStyles = makeStyles(theme => ({
 
 const Nav = () => {
   const classes = useStyles();
+  const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
+
+  const [searhKey, setSearchKey] = React.useState("");
 
   const { toggleDrawer } = useContext(SideNavContext);
   return (
     <div style={{ flexGrow: "1" }}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
+            edge='start'
+            color='inherit'
+            aria-label='menu'
             style={{ marginRight: "1rem" }}
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" style={{ flexGrow: "1" }}>
-            Events
+          <Typography variant='h6' style={{ flexGrow: "1" }}>
+            {matches ? "Events" : null}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder='Search...'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search" }}
+              onChange={e => setSearchKey(e.target.value)}
             />
           </div>
           {/* <Button color="inherit">
