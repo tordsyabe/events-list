@@ -7,6 +7,7 @@ export const EventsContext = createContext();
 
 const EventsContextProvider = props => {
   const [events, setEvents] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
   useEffect(() => {

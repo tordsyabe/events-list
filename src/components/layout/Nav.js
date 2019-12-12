@@ -1,20 +1,13 @@
 import React, { useContext } from "react";
 
-import { Link } from "react-router-dom";
-import firebase from "../../firebase";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button
-} from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { SideNavContext } from "../../contexts/SideNavContext";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { EventsContext } from "../../contexts/EventsContext";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -73,9 +66,10 @@ const Nav = () => {
   const classes = useStyles();
   const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
 
-  const [searhKey, setSearchKey] = React.useState("");
+  const [searchKey, setSearchKey] = React.useState("");
 
   const { toggleDrawer } = useContext(SideNavContext);
+  const { events, setEvents } = useContext(EventsContext);
   return (
     <div style={{ flexGrow: "1" }}>
       <AppBar position='static'>
@@ -102,8 +96,18 @@ const Nav = () => {
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
-              inputProps={{ "aria-label": "search" }}
-              onChange={e => setSearchKey(e.target.value)}
+              inputProps={{ "aria-label": "search", value: searchKey }}
+              onChange={e => {
+                const eventToSearch = [...events];
+                setSearchKey(e.target.value);
+
+                const filteredEvents = eventToSearch.filter(
+                  event => event.eventName === searchKey
+                );
+                console.log(eventToSearch);
+                console.log(searchKey);
+                console.log(filteredEvents);
+              }}
             />
           </div>
           {/* <Button color="inherit">
