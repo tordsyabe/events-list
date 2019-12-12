@@ -19,10 +19,10 @@ import ExpandableView from "./ExpandableView";
 const Home = () => {
   const matches = useMediaQuery(theme => theme.breakpoints.up("sm"));
 
-  const { events } = useContext(EventsContext);
+  const { events, searchResults } = useContext(EventsContext);
   const [cardView, setCardView] = useState(true);
 
-  const eventsUI = events.map(event =>
+  const eventsUI = searchResults.map(event =>
     cardView ? (
       <CardView key={event.id} event={event} />
     ) : matches ? (

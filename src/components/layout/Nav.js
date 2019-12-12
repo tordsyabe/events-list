@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { AppBar, Toolbar, IconButton, Typography } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -69,7 +69,19 @@ const Nav = () => {
   const [searchKey, setSearchKey] = React.useState("");
 
   const { toggleDrawer } = useContext(SideNavContext);
-  const { events, setEvents } = useContext(EventsContext);
+  const { events, setSearchResults } = useContext(EventsContext);
+
+  useEffect(() => {
+    const filteredEvents = events.filter(event =>
+      event.team
+        .toString()
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+    );
+
+    setSearchResults(filteredEvents);
+  }, [searchKey]);
+
   return (
     <div style={{ flexGrow: "1" }}>
       <AppBar position='static'>
@@ -97,17 +109,7 @@ const Nav = () => {
                 input: classes.inputInput
               }}
               inputProps={{ "aria-label": "search", value: searchKey }}
-              onChange={e => {
-                const eventToSearch = [...events];
-                setSearchKey(e.target.value);
-
-                const filteredEvents = eventToSearch.filter(
-                  event => event.eventName === searchKey
-                );
-                console.log(eventToSearch);
-                console.log(searchKey);
-                console.log(filteredEvents);
-              }}
+              onChange={e => setSearchKey(e.target.value)}
             />
           </div>
           {/* <Button color="inherit">

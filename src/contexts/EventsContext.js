@@ -22,6 +22,7 @@ const EventsContextProvider = props => {
             ...doc.data()
           }));
           setEvents(newEvents);
+          setSearchResults(newEvents);
         },
         error => console.log(error)
       );
@@ -30,7 +31,9 @@ const EventsContextProvider = props => {
   }, [currentUser]);
 
   return (
-    <EventsContext.Provider value={{ events, setEvents }}>
+    <EventsContext.Provider
+      value={{ events, setEvents, searchResults, setSearchResults }}
+    >
       {props.children}
     </EventsContext.Provider>
   );
