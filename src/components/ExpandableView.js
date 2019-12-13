@@ -5,7 +5,7 @@ import {
   Typography,
   ExpansionPanelDetails,
   ExpansionPanelActions,
-  IconButton
+  Button
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { AuthContext } from "../contexts/AuthContext";
@@ -62,26 +62,38 @@ const ExpandableView = ({
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <Typography>
-          {event.location}
+        <Typography variant='subtitle2'>
+          {`Location: ${event.location}`}
           <br />
-          {event.paperType}
+          {`Badge Type: ${event.paperType} - ${event.badgeCount} nos.`}
           <br />
-          {event.badgeCount}
+          {event.systems.terminal && `Terminals: ${event.systems.terminal}`}
+          <br />
+          {event.systems.printer && `Printers: ${event.systems.printer}`}
+          <br />
+          {event.systems.kiosk && `Kiosk: ${event.systems.kiosk}`}
+          <br />
+          Onsite Team: {event.team.map(member => `${member} `)}
         </Typography>
       </ExpansionPanelDetails>
       {isAdmin && location.pathname === "/admin" && (
         <ExpansionPanelActions>
-          <IconButton
+          <Button
             onClick={() => {
               handleOpenAlertDialog();
               setEventNameToDelete(event.eventName);
               setEventIdToDelete(event.id);
             }}
+            variant='contained'
+            color='secondary'
+            size='small'
           >
-            <DeleteRoundedIcon fontSize='small' />
-          </IconButton>
-          <IconButton
+            Delete
+          </Button>
+          <Button
+            variant='contained'
+            color='primary'
+            size='small'
             onClick={() => {
               console.log(event);
               setFormState(true);
@@ -104,8 +116,8 @@ const ExpandableView = ({
               console.log(new Date(event.eventDate.eventStartDate.seconds));
             }}
           >
-            <EditRoundedIcon fontSize='small' />
-          </IconButton>
+            Edit
+          </Button>
         </ExpansionPanelActions>
       )}
     </ExpansionPanel>
